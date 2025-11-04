@@ -40,6 +40,10 @@ class Program {
 
     private static void RemoveEmployee()
     {
+        if (employeeRegister.Count == 0) {
+            Console.WriteLine("Registret är tomt.");
+            return;
+        }
         Console.WriteLine("Ange namn på anställd som ska tas bort: ");
         string nameToRemove = Console.ReadLine();
         bool found = false;
@@ -52,7 +56,7 @@ class Program {
                 break;
             }
             if (!found) {
-            Console.WriteLine("Ingen anställd med namn " + nameToRemove + " hittades.")
+                Console.WriteLine("Ingen anställd med namn " + nameToRemove + " hittades.");
             }
 
 
@@ -82,8 +86,20 @@ class Program {
         Console.WriteLine("Ange namn: ");
         string name = Console.ReadLine();
 
+        if (string.IsNullOrEmpty(name)) {
+            Console.WriteLine("Namnet får inte vata tomt.");
+            return;
+        }
+
         Console.WriteLine("Ange lön: ");
-        decimal salary = decimal.Parse(Console.ReadLine());
+        string salaryInput = Console.ReadLine();
+        decimal salary;
+
+        if (!decimal.TryParse(salaryInput, out salary) || salary < 0) {
+            Console.WriteLine("Ogiltig lön.");
+            return;
+        }
+
         Employee newEmployee = new Employee {Name = name, Salary = salary };
         employeeRegister.Add(newEmployee);
         Console.WriteLine("Anställd " + name + " har lagts till.");
