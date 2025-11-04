@@ -1,22 +1,28 @@
 ﻿
 
 
-class Program {
+
+class Program
+{
     static List<Employee> employeeRegister = new List<Employee>();
 
-    static void Main() {
+    static void Main()
+    {
 
         bool isRunning = true;
 
-        while (isRunning) {
-            Console.WriteLine("`\nVälj ett alternativ: ");
+        while (isRunning)
+        {
+            Console.WriteLine("\nVälj ett alternativ: ");
             Console.WriteLine("1: Lägg till anställd");
             Console.WriteLine("2: Visa alla anställda och deras lön: ");
             Console.WriteLine("3: Ta bort anställd");
-            Console.WriteLine("4: Avsluta");
+            Console.WriteLine("4: Rensa registret.")
+            Console.WriteLine("5: Avsluta");
 
             string choice = Console.ReadLine();
-            switch (choice) {
+            switch (choice)
+            {
                 case "1":
                     AddEmployee();
                     break;
@@ -27,20 +33,39 @@ class Program {
                     RemoveEmployee();
                     break;
                 case "4":
+                    ClearRegister();
+                    break;
+                case "5":
                     isRunning = false;
                     break;
-
-            
-            
+                default:
+                    Console.WriteLine("Ogiltigt val.");
+                    break;
             }
-        
+
         }
-    
+
+    }
+
+    private static void ClearRegister()
+    {
+        Console.WriteLine("Är du säker på att du vill rensa hela registret?");
+        string confirmation = Console.ReadLine()?.Trim().ToLower();
+
+        if (confirmation == "ja")
+        {
+            employeeRegister.Clear();
+            Console.WriteLine("Alla anställda har tagits bort.");
+        }
+        else {
+            Console.WriteLine("Rensning avbruten.");
+        }
     }
 
     private static void RemoveEmployee()
     {
-        if (employeeRegister.Count == 0) {
+        if (employeeRegister.Count == 0)
+        {
             Console.WriteLine("Registret är tomt.");
             return;
         }
@@ -48,37 +73,36 @@ class Program {
         string nameToRemove = Console.ReadLine();
         bool found = false;
 
-        for (int i = 0; i < employeeRegister.Count; i++) { 
-            if(employeeRegister[i].Name == nameToRemove) { 
+        for (int i = 0; i < employeeRegister.Count; i++)
+        {
+            if (employeeRegister[i].Name == nameToRemove)
+            {
                 employeeRegister.RemoveAt(i);
                 Console.WriteLine("Anställd " + nameToRemove + " har tagits bort.");
                 found = true;
                 break;
             }
-            if (!found) {
-                Console.WriteLine("Ingen anställd med namn " + nameToRemove + " hittades.");
-            }
-
-
         }
-
-
-
+        if (!found)
+        {
+            Console.WriteLine("Ingen anställd med namn " + nameToRemove + " hittades.");
+        }
 
     }
 
     private static void ShowEmployees()
     {
-        if (employeeRegister.Count == 0) {
+        if (employeeRegister.Count == 0)
+        {
             Console.WriteLine("Inga anställda registrerade.");
             return;
         }
 
         Console.WriteLine("\nAnställdaregister: ");
-        foreach (Employee emp in employeeRegister) { 
-        emp.PrintInfo();
+        foreach (Employee emp in employeeRegister)
+        {
+            emp.PrintInfo();
         }
-
     }
 
     private static void AddEmployee()
@@ -86,8 +110,9 @@ class Program {
         Console.WriteLine("Ange namn: ");
         string name = Console.ReadLine();
 
-        if (string.IsNullOrEmpty(name)) {
-            Console.WriteLine("Namnet får inte vata tomt.");
+        if (string.IsNullOrEmpty(name))
+        {
+            Console.WriteLine("Namnet får inte vara tomt.");
             return;
         }
 
@@ -95,32 +120,37 @@ class Program {
         string salaryInput = Console.ReadLine();
         decimal salary;
 
-        if (!decimal.TryParse(salaryInput, out salary) || salary < 0) {
+        if (!decimal.TryParse(salaryInput, out salary) || salary < 0)
+        {
             Console.WriteLine("Ogiltig lön.");
             return;
         }
 
-        Employee newEmployee = new Employee {Name = name, Salary = salary };
+        Employee newEmployee = new Employee { Name = name, Salary = salary };
         employeeRegister.Add(newEmployee);
         Console.WriteLine("Anställd " + name + " har lagts till.");
 
     }
 }
 
-public class Employee {
+public class Employee
+{
 
-  public string Name {
+    public string Name
+    {
         get;
         set;
     }
 
-    public decimal Salary {
+    public decimal Salary
+    {
         get;
         set;
     }
 
-    public void PrintInfo() {
-        Console.WriteLine($"Name: {Name}, Salary: {Salary} SEK");
+    public void PrintInfo()
+    {
+        Console.WriteLine($"Namn: {Name}, Lön: {Salary} SEK");
     }
 
 }
