@@ -1,15 +1,9 @@
-﻿
-
-
-
-
-class Program
+﻿class Program
 {
     static List<Employee> employeeRegister = new List<Employee>();
 
     static void Main()
     {
-
         bool isRunning = true;
 
         while (isRunning)
@@ -48,9 +42,7 @@ class Program
                     Console.WriteLine("Ogiltigt val.");
                     break;
             }
-
         }
-
     }
 
     private static void SearchEmployee()
@@ -129,7 +121,6 @@ class Program
         {
             Console.WriteLine("Ingen anställd med namn " + nameToRemove + " hittades.");
         }
-
     }
 
     private static void ShowEmployees()
@@ -171,13 +162,11 @@ class Program
         Employee newEmployee = new Employee { Name = name, Salary = salary };
         employeeRegister.Add(newEmployee);
         Console.WriteLine("Anställd " + name + " har lagts till.");
-
     }
 }
 
 public class Employee
 {
-
     public string Name
     {
         get;
