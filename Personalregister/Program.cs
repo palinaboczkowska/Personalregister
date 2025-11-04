@@ -1,5 +1,6 @@
 ﻿
 
+
 class Program {
     static List<Employee> employeeRegister = new List<Employee>();
 
@@ -11,7 +12,8 @@ class Program {
             Console.WriteLine("`\nVälj ett alternativ: ");
             Console.WriteLine("1: Lägg till anställd");
             Console.WriteLine("2: Visa alla anställda och deras lön: ");
-            Console.WriteLine("3: Avsluta");
+            Console.WriteLine("3: Ta bort anställd");
+            Console.WriteLine("4: Avsluta");
 
             string choice = Console.ReadLine();
             switch (choice) {
@@ -19,9 +21,12 @@ class Program {
                     AddEmployee();
                     break;
                 case "2":
-                    ShowEployees();
+                    ShowEmployees();
                     break;
                 case "3":
+                    RemoveEmployee();
+                    break;
+                case "4":
                     isRunning = false;
                     break;
 
@@ -33,7 +38,32 @@ class Program {
     
     }
 
-    private static void ShowEployees()
+    private static void RemoveEmployee()
+    {
+        Console.WriteLine("Ange namn på anställd som ska tas bort: ");
+        string nameToRemove = Console.ReadLine();
+        bool found = false;
+
+        for (int i = 0; i < employeeRegister.Count; i++) { 
+            if(employeeRegister[i].Name == nameToRemove) { 
+                employeeRegister.RemoveAt(i);
+                Console.WriteLine("Anställd " + nameToRemove + " har tagits bort.");
+                found = true;
+                break;
+            }
+            if (!found) {
+            Console.WriteLine("Ingen anställd med namn " + nameToRemove + " hittades.")
+            }
+
+
+        }
+
+
+
+
+    }
+
+    private static void ShowEmployees()
     {
         if (employeeRegister.Count == 0) {
             Console.WriteLine("Inga anställda registrerade.");
