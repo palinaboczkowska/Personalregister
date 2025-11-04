@@ -2,6 +2,7 @@
 
 
 
+
 class Program
 {
     static List<Employee> employeeRegister = new List<Employee>();
@@ -16,9 +17,10 @@ class Program
             Console.WriteLine("\nVälj ett alternativ: ");
             Console.WriteLine("1: Lägg till anställd");
             Console.WriteLine("2: Visa alla anställda och deras lön: ");
-            Console.WriteLine("3: Ta bort anställd");
-            Console.WriteLine("4: Rensa registret.")
-            Console.WriteLine("5: Avsluta");
+            Console.WriteLine("3: Sök efter anställd.");
+            Console.WriteLine("4: Ta bort anställd");
+            Console.WriteLine("5: Rensa registret.");
+            Console.WriteLine("6: Avsluta");
 
             string choice = Console.ReadLine();
             switch (choice)
@@ -29,13 +31,17 @@ class Program
                 case "2":
                     ShowEmployees();
                     break;
+
                 case "3":
-                    RemoveEmployee();
+                    SearchEmployee();
                     break;
                 case "4":
-                    ClearRegister();
+                    RemoveEmployee();
                     break;
                 case "5":
+                    ClearRegister();
+                    break;
+                case "6":
                     isRunning = false;
                     break;
                 default:
@@ -47,8 +53,44 @@ class Program
 
     }
 
+    private static void SearchEmployee()
+    {
+        if (employeeRegister.Count == 0)
+        {
+            Console.WriteLine("Registret är tomt.");
+            return;
+        }
+
+        Console.WriteLine("Ange namn eller del av namn att söka efter: ");
+        string searchInput = Console.ReadLine()?.Trim().ToLower();
+
+        List<Employee> matches = new List<Employee>();
+        foreach (Employee emp in employeeRegister)
+        {
+            if (emp.Name.ToLower().Contains(searchInput))
+            {
+                matches.Add(emp);
+            }
+        }
+        if (matches.Count == 0)
+        {
+            Console.WriteLine("Ingen anställd matchar söktermen.");
+        }
+        else {
+            Console.WriteLine($"Hittade {matches.Count} matchning(ar): ");
+            foreach (Employee emp in matches) { 
+            emp.PrintInfo();
+            }
+        }
+    }
+
     private static void ClearRegister()
     {
+        if (employeeRegister.Count == 0)
+        {
+            Console.WriteLine("Registret är tomt.");
+            return;
+        }
         Console.WriteLine("Är du säker på att du vill rensa hela registret?");
         string confirmation = Console.ReadLine()?.Trim().ToLower();
 
